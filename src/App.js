@@ -1,39 +1,38 @@
 import React,{useState} from 'react'
+import './App.css';
 
 const App = () => {
-
-  const [city,setCity] = useState("");
-  const [result,setResult] = useState("");
-  const changeHandler = e =>{
-    setCity(e.target.value);
+  const [input,setInput] = useState("");
+  const [result,setResult] = useState(0);
+  const handler = e =>{
+    setInput(e.target.value);
   }
-  const submitHandler = e =>{
-    e.preventDefault();
-    fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=d885aa1d783fd13a55050afeef620fcb`).then(
-      response=> response.json()).then(
-        data => {
-          const kelvin = data.main.temp;
-          const celcius = kelvin - 273.15;
-          setResult("Temperature at "+city+"\n"+Math.round(celcius)+"°C");
-        }
-      ).catch(error => console.log(error))
-      setCity("");
-  }
-  return(
-  <div>
+  return (
+    <div>
       <center>
-        <div className="card">
-          <div className="card-body">
-            <h4 className="card-title">Weather App</h4>
-            <form onSubmit={submitHandler}>
-              <input size="30" type="text" name="city" onChange={changeHandler} value={city}/> <br /><br />
-              <input type="submit" value="Get Temperature" />
-            </form><br /> <br />
-            <div>
-               <h1>{result}</h1> 
-            </div>
-          </div>
-        </div>
+        <input type="text" value={input} name="input" onChange={handler} />
+        <br />
+        <button onClick={() => setResult((input))}>Result</button>
+        <h4>Result is : {result}</h4>
+
+        <button onClick={() => setInput(input+'1')}>1</button>
+        <button onClick={() => setInput(input+'2')}>2</button>
+        <button onClick={() => setInput(input+'3')}>3</button>
+        <button onClick={() => setInput(input+'4')}>4</button>
+        <button onClick={() => setInput(input+'5')}>5</button><br />
+
+        <button onClick={() => setInput(input+'6')}>6</button>
+        <button onClick={() => setInput(input+'7')}>7</button>
+        <button onClick={() => setInput(input+'8')}>8</button>
+        <button onClick={() => setInput(input+'9')}>9</button>
+        <button onClick={() => setInput(input+'0')}>0</button><br />
+
+        <button onClick={() => setInput(input+'+')}>+</button>
+        <button onClick={() => setInput(input+'-')}>-</button>
+        <button onClick={() => setInput(input+'*')}>*</button>
+        <button onClick={() => setInput(input+'/')}>/</button>
+        <button onClick={() => {setInput('');setResult(0)}}>clr</button><br /> 
+
       </center>
     </div>
   )
